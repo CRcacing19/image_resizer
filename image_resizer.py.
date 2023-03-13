@@ -1,0 +1,26 @@
+from PIL import Image
+import argparse
+
+# определение аргументов командной строки
+parser = argparse.ArgumentParser()
+parser.add_argument("input_file", help="path to input image")
+parser.add_argument("output_file", help="path to output image")
+parser.add_argument("--width", type=int, help="output image width")
+parser.add_argument("--height", type=int, help="output image height")
+args = parser.parse_args()
+
+# загрузка изображения и изменение размера
+image = Image.open(args.input_file)
+if args.width and args.height:
+    image = image.resize((args.width, args.height))
+elif args.width:
+    wpercent = (args.width / float(image.size[0]))
+    hsize = int((float(image.size[1]) * float(wpercent)))
+    image = image.resize((args.width, hsize))
+elif args.height:
+    hpercent = (args.height / float(image.size[1]))
+    wsize = int((float(image.size[0]) * float(hpercent)))
+    image = image.resize((wsize, args.height))
+
+# сохранение изображения
+image.save(args.output_file)
