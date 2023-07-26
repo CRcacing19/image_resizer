@@ -23,4 +23,4 @@ elif args.height:
     image = image.resize((wsize, args.height))
 
 # сохранение изображения
-image.save(args.output_file)
+image.save(args.output_file).
